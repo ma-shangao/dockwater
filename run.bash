@@ -32,13 +32,14 @@ Help()
    # Display Help
    echo "Runs a docker container with the image created by build.bash."
    echo
-   echo "Syntax: scriptTemplate [-c|s|t|i|h]"
+   echo "Syntax: scriptTemplate [-c|s|t|i|d|h]"
    echo "options:"
    echo "c     Add cuda library support."
    echo "s     Create an image with novnc for use with cloudsim."
    echo "t     Create a test image for use with CI pipelines."
    echo "x     Create base image for the VRX competition server."
    echo "i     Create image with only intel gpu support."
+   echo "d     Run the image for development purpose."
    echo "h     Print this help message and exit."
    echo
 }
@@ -64,6 +65,9 @@ while getopts ":cstxih" option; do
     i) # Build without nividia gpu but only intel gpu
       echo "Building with only intel gpu"
       ROCKER_ARGS="--dev-helpers --devices $INTEL $JOY --x11 --user --home --git";;
+    d) # Run development container
+      echo "Runing development container"
+      ROCKER_ARGS="--dev-helpers --nvidia --x11 --user --home --git";;
     h) # print this help message
       Help
       return 0;; 
